@@ -8,7 +8,7 @@
 # Health Monitor
 Health Monitor creates a simple alert in chat when an actor's HP is changed. The module includes several settings to hide/show certain alerts to players and to hide the name of NPCs.
 
-<img src="/img/health-monitor.png" height="350"/>
+<img src="/img/health-monitor2.png" height="350"/>
 
 # Settings
 
