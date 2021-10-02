@@ -38,7 +38,7 @@ HP alerts will also display the actor's damage immunities, resistances, and vuln
 NOTE: This feature is purely visual. An automation module will still be required to automatically apply immunities/resistances/vulnerabilities.
 
 ### Show Changes to Max HP / Temp Max HP
-Increases in an actor's max HP/temp max HP will be shown in blue alerts. Decreases will be shown in orange alerts. This setting is enabled by default.
+Increases in an actor's max HP/temp max HP will be shown in blue alerts. Decreases will be shown in orange alerts.
 
 NOTE: Depending on how different systems implement temp HP, this feature may not function properly for temp Max HP.
 

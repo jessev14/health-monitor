@@ -92,7 +92,7 @@ class HealthMonitor {
             hint: "",
             scope: "world",
             type: Boolean,
-            default: true,
+            default: false,
             config: true,
         });
 
