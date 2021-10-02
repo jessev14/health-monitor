@@ -1,0 +1,48 @@
+{
+    "healthMonitor": {
+        "settings": {
+            "useTokenName": {
+                "name": "Use Token Name",
+                "hint": "For unlinked tokens, token name will be used. For linked tokens, prototype token name will be used."
+            },
+            "hideNPCs": {
+                "name": "Hide NPC Health Log from Players",
+                "hint": "GM users can reveal chat messages to players using context menu"
+            },
+            "hideNPCname": {
+                "name": "Hide NPC Name",
+                "hint": "Replaces NPC name with text set below."
+            },
+            "replacementName": {
+                "name": "Hidden NPC Name Replacement",
+                "hint": "If above setting is enabled, NPC name will be replaced with text entered here."
+            },
+            "showGMonly": {
+                "name": "Display Health Monitor to GM Users only",
+                "hint": "Chat messages can be revealed to players using context menu."
+            },
+            "showToggle": {
+                "name": "Show Health Monitor Toggle",
+                "hint": "Temporarily disable Health Monitor by toggling off the control button on the token toolbar. The control button is only visible to GM users."
+            },
+            "showRes": {
+                "name": "Show Damage Immunities, Resistances, and Vulnerabilities",
+                "hint": "Other modules required for damage reduction automation."
+            }
+        },
+        "control": {
+            "title": "Toggle Health Monitor"
+        },
+        "chatMessage": {
+            "heals": "heals",
+            "takes": "takes",
+            "damage": "damage",
+            "gains": "gains",
+            "loses": "loses",
+            "maxHP": "max HP",
+            "Immunity": "Immunity",
+            "Resistance": "Resistance",
+            "Vulnerability": "Vulnerability"
+        }
+    }
+}
