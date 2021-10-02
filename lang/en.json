@@ -28,6 +28,9 @@
             "showRes": {
                 "name": "Show Damage Immunities, Resistances, and Vulnerabilities",
                 "hint": "Other modules required for damage reduction automation."
+            },
+            "trackMax": {
+                "name": "Show Changes to Max HP / Temp Max HP"
             }
         },
         "control": {
