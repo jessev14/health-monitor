@@ -46,3 +46,5 @@ NOTE: Depending on how different systems implement temp HP, this feature may not
 A callback is registered to the `preUpdateActor` hook. When a change in HP is detected, that data is used to create a chat message logging the value of the change.
 
 A second callback is registered to the `renderChatMessage` hook to apply custom styling to chat messages created by the above callback.
+
+[Previous repo](https://github.com/p4535992/health-monitor).
