@@ -202,7 +202,7 @@ class HealthMonitor {
                 if (!v) continue;
 
                 // Don't log changes to max if module settings disabled
-                if (!game.settings.get(moduleName, "trackMax")) return;
+                if (k === "max" && !game.settings.get(moduleName, "trackMax")) return;
 
                 // Prepare chat message content based on delta
                 const isMax = k === "max";
