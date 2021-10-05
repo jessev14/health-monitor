@@ -1,6 +1,6 @@
 {
     "name": "health-monitor",
-    "title": "Health Montior",
+    "title": "Health Monitor",
     "description": "Log an alert in chat when an actor's HP is changed.",
     "version": "2.0.0",
     "author": "enso#0361",

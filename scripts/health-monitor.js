@@ -88,7 +88,7 @@ class HealthMonitor {
             config: true
         });
         game.settings.register(moduleName, "trackMax", {
-            name: game.i18n.localize("healthMonitor.settings.showToggle.name"),
+            name: game.i18n.localize("healthMonitor.settings.trackMax.name"),
             hint: "",
             scope: "world",
             type: Boolean,
