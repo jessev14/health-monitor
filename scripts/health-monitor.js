@@ -162,7 +162,7 @@ class HealthMonitor {
                 const hmMessageDiv = html.find(`div.hm-message`);
                 $(hmMessageDiv).find(`span`).after(`<span><a class="button message-delete"><i class="fas fa-trash"></i></a></span>`);
 
-                html.find(`a.message-delete`).closest(`span`).css("position", "absolute")
+                html.find(`a.message-delete`).closest(`span`).css("position", "absolute");
                 html.find(`a.message-delete`).closest(`span`).css("left", "93%");
             }
         });
