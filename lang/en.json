@@ -31,6 +31,9 @@
             },
             "trackMax": {
                 "name": "Show Changes to Max HP / Temp Max HP"
+            },
+            "trashIcon": {
+                "name": "Enable Health Monitor Chat Message Trash Icon"
             }
         },
         "control": {

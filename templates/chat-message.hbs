@@ -1,13 +1,11 @@
 <div class="hm-message {{css}}">
-    {{#if damage}}
-    <div>
+    <span>
+        {{#if damage}}
         {{characterName}} {{healsTakes}} {{delta}} {{localize "healthMonitor.chatMessage.damage"}}
-    </div>
-    {{else}}
-    <div>
+        {{else}}
         {{characterName}} {{gainsLoses}} {{delta}} {{localize "healthMonitor.chatMessage.maxHP"}}
-    </div>
-    {{/if}}
+        {{/if}}
+    </span>
     {{#if showRes}}
     <div>
         {{localize "healthMonitor.chatMessage.Immunity"}}: {{immunity}}

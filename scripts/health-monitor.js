@@ -1,6 +1,7 @@
 const moduleName = "health-monitor";
 // Background colors for: takes, heals, loses, gains
 const backgroundColors = ["#c50d19", "#06a406", "#ff8c25", "#0d58c5"];
+let trashIconSetting;
 
 
 Hooks.once("init", () => {
@@ -11,6 +12,9 @@ Hooks.once("init", () => {
 
     // Register module settings
     window.HealthMonitor.registerSettings();
+
+    // Determine trashIcon module setting state
+    trashIconSetting = game.settings.get(moduleName, "trashIcon");
 
     // Register "init" hooks
     window.HealthMonitor.registerInitHooks();
@@ -93,7 +97,16 @@ class HealthMonitor {
             scope: "world",
             type: Boolean,
             default: false,
+            config: true
+        });
+        game.settings.register(moduleName, "trashIcon", {
+            name: game.i18n.localize("healthMonitor.settings.trashIcon.name"),
+            hint: "",
+            scope: "world",
+            type: Boolean,
+            default: false,
             config: true,
+            onChange: () => window.location.reload()
         });
 
         game.settings.register(moduleName, "hmToggle", {
@@ -143,6 +156,15 @@ class HealthMonitor {
             html.css("border", "2px solid #191813d6");
             html.find(".message-sender").text("");
             html.find(".message-metadata")[0].style.display = "none";
+
+            // Optionally add trash icon
+            if (trashIconSetting) {
+                const hmMessageDiv = html.find(`div.hm-message`);
+                $(hmMessageDiv).find(`span`).after(`<span><a class="button message-delete"><i class="fas fa-trash"></i></a></span>`);
+
+                html.find(`a.message-delete`).closest(`span`).css("position", "absolute")
+                html.find(`a.message-delete`).closest(`span`).css("left", "93%");
+            }
         });
     }
 
