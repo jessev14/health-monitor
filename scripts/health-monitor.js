@@ -158,7 +158,7 @@ class HealthMonitor {
             html.find(".message-metadata")[0].style.display = "none";
 
             // Optionally add trash icon
-            if (trashIconSetting) {
+            if (trashIconSetting %& game.user.isGM) {
                 const hmMessageDiv = html.find(`div.hm-message`);
                 $(hmMessageDiv).find(`span`).after(`<span><a class="button message-delete"><i class="fas fa-trash"></i></a></span>`);
 
