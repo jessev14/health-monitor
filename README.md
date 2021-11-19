@@ -42,6 +42,9 @@ Increases in an actor's max HP/temp max HP will be shown in blue alerts. Decreas
 
 NOTE: Depending on how different systems implement temp HP, this feature may not function properly for temp Max HP.
 
+### Enable Health Monitor Chat Message Trash Icon
+For GM users, adds the trash icon to Health Monitor chat messages to allow for deleting these messages.
+
 ## Technical Notes
 A callback is registered to the `preUpdateActor` hook. When a change in HP is detected, that data is used to create a chat message logging the value of the change.
 
