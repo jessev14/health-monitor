@@ -18,6 +18,9 @@ Hooks.once("init", () => {
 
     // Register "init" hooks
     window.HealthMonitor.registerInitHooks();
+
+    // Register socket
+    window.HealthMonitor.registerSocket();
 });
 
 Hooks.once("ready", () => {
@@ -249,12 +252,37 @@ class HealthMonitor {
                 };
                 const content = await renderTemplate(`modules/${moduleName}/templates/chat-message.hbs`, templateData);
 
-                // Create chat message
-                await ChatMessage.create({
-                    content,
-                    whisper
-                });
+                // preUpdateActor hook only fires on client that initiated the update
+                if (game.user.isGM) {
+                    // Create chat message
+                    await ChatMessage.create({
+                        content,
+                        whisper
+                    });
+                } else {
+                    // Send chat message data to GM client via socket
+                    socket.emit(`module.${moduleName}`, {
+                        GM: game.users.find(u => u.isGM && u.active).id,
+                        messageData: {
+                            content,
+                            whisper
+                        }
+                    });
+                }
             }
+        });
+    }
+
+    // Socket
+    static registerSocket() {
+        socket.on(`module.${moduleName}`, data => {
+            if (game.user.id !== data.GM) return;
+
+            const { content, whisper } = data.messageData;
+            ChatMessage.create({
+                content,
+                whisper
+            });
         });
     }
 }
