@@ -7,8 +7,8 @@
     "esmodules": [
         "./scripts/health-monitor.js"
     ],
-    "minimumCoreVersion": "0.8.1",
-    "compatibleCoreVersion": "0.8.9",
+    "minimumCoreVersion": "9",
+    "compatibleCoreVersion": "9",
     "languages": [
         {
             "lang": "en",
