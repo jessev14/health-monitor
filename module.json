@@ -1,14 +1,28 @@
 {
-    "name": "health-monitor",
+    "id": "health-monitor",
     "title": "Health Monitor",
     "description": "Log an alert in chat when an actor's HP is changed.",
-    "version": "2.1.2",
     "author": "enso#0361",
+    "version": "2.1.2",
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10"
+    },
+    "relationships": {
+        "systems": [
+            {
+                "id": "dnd5e",
+                "type": "system",
+                "compatibility": {
+                    "minimum": "2.0.0",
+                    "verified": "2.0.0"
+                }
+            }
+        ]
+    },
     "esmodules": [
         "./scripts/health-monitor.js"
     ],
-    "minimumCoreVersion": "9",
-    "compatibleCoreVersion": "9",
     "languages": [
         {
             "lang": "en",

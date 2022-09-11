@@ -275,7 +275,7 @@ class HealthMonitor {
 
     // Socket
     static registerSocket() {
-        socket.on(`module.${moduleName}`, data => {
+        game.socket.on(`module.${moduleName}`, data => {
             if (game.user.id !== data.GM) return;
 
             const { content, whisper } = data.messageData;
