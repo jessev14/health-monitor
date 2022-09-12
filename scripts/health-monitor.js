@@ -1,11 +1,11 @@
-const moduleName = "health-monitor";
+const moduleID = "health-monitor";
 // Background colors for: takes, heals, loses, gains
 const backgroundColors = ["#c50d19", "#06a406", "#ff8c25", "#0d58c5"];
 let trashIconSetting;
 
 
 Hooks.once("init", () => {
-    console.log(`${moduleName} | Initializing ${moduleName}`);
+    console.log(`${moduleID} | Initializing ${moduleID}`);
 
     // Open module API
     window.HealthMonitor = HealthMonitor;
@@ -14,7 +14,7 @@ Hooks.once("init", () => {
     window.HealthMonitor.registerSettings();
 
     // Determine trashIcon module setting state
-    trashIconSetting = game.settings.get(moduleName, "trashIcon");
+    trashIconSetting = game.settings.get(moduleID, "trashIcon");
 
     // Register "init" hooks
     window.HealthMonitor.registerInitHooks();
@@ -32,7 +32,7 @@ Hooks.once("ready", () => {
 class HealthMonitor {
     // Settings
     static registerSettings() {
-        game.settings.register(moduleName, "useTokenName", {
+        game.settings.register(moduleID, "useTokenName", {
             name: game.i18n.localize("healthMonitor.settings.useTokenName.name"),
             hint: game.i18n.localize("healthMonitor.settings.useTokenName.hint"),
             scope: "world",
@@ -40,7 +40,7 @@ class HealthMonitor {
             default: false,
             config: true
         });
-        game.settings.register(moduleName, "hideNPCs", {
+        game.settings.register(moduleID, "hideNPCs", {
             name: game.i18n.localize("healthMonitor.settings.hideNPCs.name"),
             hint: game.i18n.localize("healthMonitor.settings.hideNPCs.hint"),
             scope: "world",
@@ -48,7 +48,7 @@ class HealthMonitor {
             default: false,
             config: true
         });
-        game.settings.register(moduleName, "hideNPCname", {
+        game.settings.register(moduleID, "hideNPCname", {
             name: game.i18n.localize("healthMonitor.settings.hideNPCname.name"),
             hint: game.i18n.localize("healthMonitor.settings.hideNPCname.hint"),
             scope: "world",
@@ -56,7 +56,7 @@ class HealthMonitor {
             default: false,
             config: true
         });
-        game.settings.register(moduleName, "replacementName", {
+        game.settings.register(moduleID, "replacementName", {
             name: game.i18n.localize("healthMonitor.settings.replacementName.name"),
             hint: game.i18n.localize("healthMonitor.settings.replacementName.hint"),
             scope: "world",
@@ -64,7 +64,7 @@ class HealthMonitor {
             default: "???",
             config: true
         });
-        game.settings.register(moduleName, "showGMonly", {
+        game.settings.register(moduleID, "showGMonly", {
             name: game.i18n.localize("healthMonitor.settings.showGMonly.name"),
             hint: game.i18n.localize("healthMonitor.settings.showGMonly.hint"),
             scope: "world",
@@ -72,7 +72,7 @@ class HealthMonitor {
             default: false,
             config: true
         });
-        game.settings.register(moduleName, "showToggle", {
+        game.settings.register(moduleID, "showToggle", {
             name: game.i18n.localize("healthMonitor.settings.showToggle.name"),
             hint: game.i18n.localize("healthMonitor.settings.showToggle.hint"),
             scope: "world",
@@ -82,11 +82,11 @@ class HealthMonitor {
             onChange: async () => {
                 if (!game.user.isGM) return;
 
-                await game.settings.set(moduleName, "hmToggle", true);
+                await game.settings.set(moduleID, "hmToggle", true);
                 ui.controls.initialize();
             }
         });
-        game.settings.register(moduleName, "showRes", {
+        game.settings.register(moduleID, "showRes", {
             name: game.i18n.localize("healthMonitor.settings.showRes.name"),
             hint: game.i18n.localize("healthMonitor.settings.showRes.hint"),
             scope: "world",
@@ -94,7 +94,7 @@ class HealthMonitor {
             default: false,
             config: true
         });
-        game.settings.register(moduleName, "trackMax", {
+        game.settings.register(moduleID, "trackMax", {
             name: game.i18n.localize("healthMonitor.settings.trackMax.name"),
             hint: "",
             scope: "world",
@@ -102,7 +102,7 @@ class HealthMonitor {
             default: false,
             config: true
         });
-        game.settings.register(moduleName, "trashIcon", {
+        game.settings.register(moduleID, "trashIcon", {
             name: game.i18n.localize("healthMonitor.settings.trashIcon.name"),
             hint: "",
             scope: "world",
@@ -112,7 +112,7 @@ class HealthMonitor {
             onChange: () => window.location.reload()
         });
 
-        game.settings.register(moduleName, "hmToggle", {
+        game.settings.register(moduleID, "hmToggle", {
             name: "Toggle Health Monitor",
             hint: "",
             scope: "world",
@@ -125,7 +125,7 @@ class HealthMonitor {
     // Hooks
     static registerInitHooks() {
         // Add control toggle to enable/disable Health Monitor
-        if (game.settings.get(moduleName, "showToggle")) {
+        if (game.settings.get(moduleID, "showToggle")) {
             Hooks.on("getSceneControlButtons", controls => {
 
                 const bar = controls.find(c => c.name === "token");
@@ -135,8 +135,8 @@ class HealthMonitor {
                     icon: "fa fa-heartbeat",
                     visible: game.user.isGM,
                     toggle: true,
-                    active: game.settings.get(moduleName, "hmToggle"),
-                    onClick: async toggled => await game.settings.set(moduleName, "hmToggle", toggled)
+                    active: game.settings.get(moduleID, "hmToggle"),
+                    onClick: async toggled => await game.settings.set(moduleID, "hmToggle", toggled)
                 });
             });
         }
@@ -176,13 +176,13 @@ class HealthMonitor {
         // When actor HP is updated, create chat message logging HP change
         Hooks.on("preUpdateActor", async (actor, diff, options, userID) => {
             // If Health Monitor disabled via control toggle, return
-            if (!game.settings.get(moduleName, "hmToggle")) return;
+            if (!game.settings.get(moduleID, "hmToggle")) return;
 
             // If no HP change in update, return
-            const newHP = getProperty(diff, "data.attributes.hp");
+            const newHP = getProperty(diff, "system.attributes.hp");
             if (!newHP) return;
 
-            const oldHP = getProperty(actor.data, "data.attributes.hp");
+            const oldHP = getProperty(actor, "system.attributes.hp");
 
             // Calculate tempHP and HP deltas
             let tempDelta, valueDelta;
@@ -199,23 +199,25 @@ class HealthMonitor {
             const delta = (tempDelta || 0) + (valueDelta || 0);
 
             // Prepare common template data
-            const hideName = actor.type === "npc" && game.settings.get(moduleName, "hideNPCname");
-            const replacementName = game.settings.get(moduleName, "replacementName");
-            const useTokenName = game.settings.get(moduleName, "useTokenName");
-            const characterName = hideName ?
-                replacementName : useTokenName ?
-                    actor.token?.name || actor.data.token.name : actor.name;
+            const hideName = actor.type === "npc" && game.settings.get(moduleID, "hideNPCname");
+            const replacementName = game.settings.get(moduleID, "replacementName");
+            const useTokenName = game.settings.get(moduleID, "useTokenName");
+            const characterName = hideName
+            ? replacementName
+            : useTokenName
+                ? actor.token?.name || actor.token.name
+                : actor.name;
 
-            const showRes = game.settings.get(moduleName, "showRes");
+            const showRes = game.settings.get(moduleID, "showRes");
             let immunity, resistance, vulnerability;
             if (showRes) {
-                immunity = actor.data.data.traits.di.value.join(", ");
-                resistance = actor.data.data.traits.dr.value.join(", ");
-                vulnerability = actor.data.data.traits.dv.value.join(", ");
+                immunity = actor.system.traits.di.value.join(", ");
+                resistance = actor.system.traits.dr.value.join(", ");
+                vulnerability = actor.system.traits.dv.value.join(", ");
             }
 
             // If "showGMonly" setting enabled or if "hideNPCs" setting enabled and actor is an NPC, whisper to GM users
-            const whisper = game.settings.get(moduleName, "showGMonly") || (game.settings.get(moduleName, "hideNPCs") && actor.type === "npc") ?
+            const whisper = game.settings.get(moduleID, "showGMonly") || (game.settings.get(moduleID, "hideNPCs") && actor.type === "npc") ?
                 game.users.filter(u => u.isGM).map(u => u.id) : [];
         
             // For both deltas, create a chat message logging HP change
@@ -228,7 +230,7 @@ class HealthMonitor {
                 if (!v) continue;
 
                 // Don't log changes to max if module settings disabled
-                if (k === "max" && !game.settings.get(moduleName, "trackMax")) return;
+                if (k === "max" && !game.settings.get(moduleID, "trackMax")) return;
 
                 // Prepare chat message content based on delta
                 const isMax = k === "max";
@@ -250,7 +252,7 @@ class HealthMonitor {
                     resistance,
                     vulnerability
                 };
-                const content = await renderTemplate(`modules/${moduleName}/templates/chat-message.hbs`, templateData);
+                const content = await renderTemplate(`modules/${moduleID}/templates/chat-message.hbs`, templateData);
 
                 // preUpdateActor hook only fires on client that initiated the update
                 if (game.user.isGM) {
@@ -261,7 +263,7 @@ class HealthMonitor {
                     });
                 } else {
                     // Send chat message data to GM client via socket
-                    socket.emit(`module.${moduleName}`, {
+                    socket.emit(`module.${moduleID}`, {
                         GM: game.users.find(u => u.isGM && u.active).id,
                         messageData: {
                             content,
@@ -275,7 +277,7 @@ class HealthMonitor {
 
     // Socket
     static registerSocket() {
-        game.socket.on(`module.${moduleName}`, data => {
+        game.socket.on(`module.${moduleID}`, data => {
             if (game.user.id !== data.GM) return;
 
             const { content, whisper } = data.messageData;
