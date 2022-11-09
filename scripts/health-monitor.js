@@ -160,6 +160,9 @@ class HealthMonitor {
             html.find(".message-sender").text("");
             html.find(".message-metadata")[0].style.display = "none";
 
+            const whisperTo = html.find('span.whisper-to');
+            whisperTo?.remove();
+
             // Optionally add trash icon
             if (trashIconSetting && game.user.isGM) {
                 const hmMessageDiv = html.find(`div.hm-message`);
