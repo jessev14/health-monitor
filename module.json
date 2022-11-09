@@ -2,7 +2,12 @@
     "id": "health-monitor",
     "title": "Health Monitor",
     "description": "Log an alert in chat when an actor's HP is changed.",
-    "author": "enso#0361",
+    "authors": [
+        {
+            "name": "enso",
+            "discord": "enso#0361"
+        }
+    ],
     "version": "2.1.2",
     "compatibility": {
         "minimum": "10",
