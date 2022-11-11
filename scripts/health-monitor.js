@@ -266,7 +266,7 @@ class HealthMonitor {
                     });
                 } else {
                     // Send chat message data to GM client via socket
-                    socket.emit(`module.${moduleID}`, {
+                    game.socket.emit(`module.${moduleID}`, {
                         GM: game.users.find(u => u.isGM && u.active).id,
                         messageData: {
                             content,
