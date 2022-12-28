@@ -208,7 +208,7 @@ class HealthMonitor {
             const characterName = hideName
             ? replacementName
             : useTokenName
-                ? actor.token?.name || actor.token.name
+                ? actor.getActiveTokens()?.[0].name || actor.name
                 : actor.name;
 
             const showRes = game.settings.get(moduleID, "showRes");
