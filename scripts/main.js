@@ -34,89 +34,89 @@ const lg = x => console.log(x);
 
 Hooks.once('init', () => {
     // Register module settings.
-    game.settings.register(moduleID, "useTokenName", {
-        name: game.i18n.localize("healthMonitor.settings.useTokenName.name"),
-        hint: game.i18n.localize("healthMonitor.settings.useTokenName.hint"),
-        scope: "world",
+    game.settings.register(moduleID, 'useTokenName', {
+        name: game.i18n.localize('healthMonitor.settings.useTokenName.name'),
+        hint: game.i18n.localize('healthMonitor.settings.useTokenName.hint'),
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true
     });
-    game.settings.register(moduleID, "hideNPCs", {
-        name: game.i18n.localize("healthMonitor.settings.hideNPCs.name"),
-        hint: game.i18n.localize("healthMonitor.settings.hideNPCs.hint"),
-        scope: "world",
+    game.settings.register(moduleID, 'hideNPCs', {
+        name: game.i18n.localize('healthMonitor.settings.hideNPCs.name'),
+        hint: game.i18n.localize('healthMonitor.settings.hideNPCs.hint'),
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true
     });
-    game.settings.register(moduleID, "hideNPCname", {
-        name: game.i18n.localize("healthMonitor.settings.hideNPCname.name"),
-        hint: game.i18n.localize("healthMonitor.settings.hideNPCname.hint"),
-        scope: "world",
+    game.settings.register(moduleID, 'hideNPCname', {
+        name: game.i18n.localize('healthMonitor.settings.hideNPCname.name'),
+        hint: game.i18n.localize('healthMonitor.settings.hideNPCname.hint'),
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true
     });
-    game.settings.register(moduleID, "replacementName", {
-        name: game.i18n.localize("healthMonitor.settings.replacementName.name"),
-        hint: game.i18n.localize("healthMonitor.settings.replacementName.hint"),
-        scope: "world",
+    game.settings.register(moduleID, 'replacementName', {
+        name: game.i18n.localize('healthMonitor.settings.replacementName.name'),
+        hint: game.i18n.localize('healthMonitor.settings.replacementName.hint'),
+        scope: 'world',
         type: String,
-        default: "???",
+        default: '???',
         config: true
     });
-    game.settings.register(moduleID, "showGMonly", {
-        name: game.i18n.localize("healthMonitor.settings.showGMonly.name"),
-        hint: game.i18n.localize("healthMonitor.settings.showGMonly.hint"),
-        scope: "world",
+    game.settings.register(moduleID, 'showGMonly', {
+        name: game.i18n.localize('healthMonitor.settings.showGMonly.name'),
+        hint: game.i18n.localize('healthMonitor.settings.showGMonly.hint'),
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true
     });
-    game.settings.register(moduleID, "showToggle", {
-        name: game.i18n.localize("healthMonitor.settings.showToggle.name"),
-        hint: game.i18n.localize("healthMonitor.settings.showToggle.hint"),
-        scope: "world",
+    game.settings.register(moduleID, 'showToggle', {
+        name: game.i18n.localize('healthMonitor.settings.showToggle.name'),
+        hint: game.i18n.localize('healthMonitor.settings.showToggle.hint'),
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true,
         onChange: async () => {
             if (!game.user.isGM) return;
 
-            await game.settings.set(moduleID, "hmToggle", true);
+            await game.settings.set(moduleID, 'hmToggle', true);
             ui.controls.initialize();
         }
     });
-    game.settings.register(moduleID, "showRes", {
-        name: game.i18n.localize("healthMonitor.settings.showRes.name"),
-        hint: game.i18n.localize("healthMonitor.settings.showRes.hint"),
-        scope: "world",
+    game.settings.register(moduleID, 'showRes', {
+        name: game.i18n.localize('healthMonitor.settings.showRes.name'),
+        hint: game.i18n.localize('healthMonitor.settings.showRes.hint'),
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true
     });
-    game.settings.register(moduleID, "trackMax", {
-        name: game.i18n.localize("healthMonitor.settings.trackMax.name"),
-        hint: "",
-        scope: "world",
+    game.settings.register(moduleID, 'trackMax', {
+        name: game.i18n.localize('healthMonitor.settings.trackMax.name'),
+        hint: '',
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true
     });
-    game.settings.register(moduleID, "trashIcon", {
-        name: game.i18n.localize("healthMonitor.settings.trashIcon.name"),
-        hint: "",
-        scope: "world",
+    game.settings.register(moduleID, 'trashIcon', {
+        name: game.i18n.localize('healthMonitor.settings.trashIcon.name'),
+        hint: '',
+        scope: 'world',
         type: Boolean,
         default: false,
         config: true,
         onChange: () => window.location.reload()
     });
-    game.settings.register(moduleID, "hmToggle", {
-        name: "Toggle Health Monitor",
-        hint: "",
-        scope: "world",
+    game.settings.register(moduleID, 'hmToggle', {
+        name: 'Toggle Health Monitor',
+        hint: '',
+        scope: 'world',
         type: Boolean,
         default: true,
         config: false
@@ -208,7 +208,9 @@ Hooks.on('preUpdateActor', async (actor, diff, options, userID) => {
         || (game.settings.get(moduleID, "hideNPCs") && actor.type === "npc")
             ? game.users.filter(u => u.isGM).map(u => u.id)
             : [];
-    const characterName = actor.name;
+    const characterName = game.settings.get(moduleID, 'useTokenName')
+        ? actor.token?.name || actor.getActiveTokens()[0]?.document.name || actor.name
+        : actor.name ;
     const showRes = game.settings.get(moduleID, 'showRes');
     let immunity, resistance, vulnerability;
     if (showRes) {
