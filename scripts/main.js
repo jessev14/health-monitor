@@ -214,9 +214,9 @@ Hooks.on('preUpdateActor', async (actor, diff, options, userID) => {
     const showRes = game.settings.get(moduleID, 'showRes');
     let immunity, resistance, vulnerability;
     if (showRes) {
-        immunity = actor.system.traits.di.value.join(", ");
-        resistance = actor.system.traits.dr.value.join(", ");
-        vulnerability = actor.system.traits.dv.value.join(", ");
+        immunity = [...actor.system.traits.di.value].join(", ");
+        resistance = [...actor.system.traits.dr.value].join(", ");
+        vulnerability = [...actor.system.traits.dv.value].join(", ");
     }
 
     // For each HP delta, create a chat message.
