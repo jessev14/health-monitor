@@ -32,6 +32,14 @@ Hooks.once("ready", () => {
 class HealthMonitor {
     // Settings
     static registerSettings() {
+        game.settings.register(moduleID, "healthMonitorResource", {
+            name: game.i18n.localize("healthMonitor.settings.healthMonitorResource.name"),
+            hint: game.i18n.localize("healthMonitor.settings.healthMonitorResource.hint"),
+            scope: "world",
+            type: String,
+            default: "system.attributes.hp",
+            config: true
+        });
         game.settings.register(moduleID, "useTokenName", {
             name: game.i18n.localize("healthMonitor.settings.useTokenName.name"),
             hint: game.i18n.localize("healthMonitor.settings.useTokenName.hint"),
@@ -181,11 +189,13 @@ class HealthMonitor {
             // If Health Monitor disabled via control toggle, return
             if (!game.settings.get(moduleID, "hmToggle")) return;
 
+            const healthMonitorResource = game.settings.get(moduleID, 'healthMonitorResource');
+
             // If no HP change in update, return
-            const newHP = getProperty(diff, "system.attributes.hp");
+            const newHP = getProperty(diff, healthMonitorResource);
             if (!newHP) return;
 
-            const oldHP = getProperty(actor, "system.attributes.hp");
+            const oldHP = getProperty(actor, healthMonitorResource);
 
             // Calculate tempHP and HP deltas
             let tempDelta, valueDelta;
