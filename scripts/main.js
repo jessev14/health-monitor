@@ -172,6 +172,7 @@ Hooks.on("getSceneControlButtons", controls => {
         border: 2px solid #191813d6
     `;
     html.querySelector('.message-sender').innerText = '';
+    html.querySelector('.message-header').style.display = 'none';
     html.querySelector('.message-metadata').style.display = 'none';
 
     if (game.settings.get(moduleID, "trashIcon") && game.user.isGM) {
