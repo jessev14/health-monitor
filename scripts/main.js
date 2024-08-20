@@ -135,58 +135,8 @@ Hooks.once('init', () => {
 });
 
 
-// Add control toggle to enable/disable Health Monitor
-Hooks.on("getSceneControlButtons", controls => {
-    if (!game.settings.get(moduleID, "showToggle")) return;
 
-    const bar = controls.find(c => c.name === "token");
-    bar.tools.push({
-        name: "Health Monitor",
-        title: game.i18n.localize("healthMonitor.control.title"),
-        icon: "fa fa-heartbeat",
-        visible: game.user.isGM,
-        toggle: true,
-        active: game.settings.get(moduleID, "hmToggle"),
-        onClick: async toggled => await game.settings.set(moduleID, "hmToggle", toggled)
-    });
-});
 
- // Apply custom CSS to Health Monitor chat messages
- Hooks.on("renderChatMessage", (app, [html], data) => {
-    const hmMessage = html.querySelector(`.hm-message`);
-    if (!hmMessage) return;
-
-    const whisperTo = html.querySelector('span.whisper-to');
-    whisperTo?.remove();
-
-    const key = hmMessage.classList[1];
-    const { color } = chatMessageMap[key];
-    html.style.cssText = `
-        background: ${color};
-        text-shadow: -1px -1px 0 #000 , 1px -1px 0 #000 , -1px 1px 0 #000 , 1px 1px 0 #000;
-        color: white;
-        text-align: center;
-        font-size: 12px;
-        margin: 2px;
-        padding: 2px;
-        border: 2px solid #191813d6
-    `;
-    html.querySelector('.message-sender').innerText = '';
-    html.querySelector('.message-metadata').style.display = 'none';
-
-    if (game.settings.get(moduleID, "trashIcon") && game.user.isGM) {
-        const hmMessageDiv = html.querySelector(`div.hm-message`);
-        hmMessageDiv.style.position = 'relative';
-
-        const trashIcon = document.createElement('span');
-        trashIcon.style.position = 'absolute';
-        trashIcon.style.left = '95%';
-        trashIcon.innerHTML = `
-            <a class="button message-delete"><i class="fas fa-trash"></i></a>
-        `;
-        hmMessageDiv.querySelector(`span`).after(trashIcon);
-    }
-});
 
 Hooks.on('preUpdateActor', async (actor, diff, options, userID) => {
     if (!game.settings.get(moduleID, 'hmToggle')) return;
