@@ -171,6 +171,8 @@ Hooks.on('preUpdateActor', async (actor, diff, options, userID) => {
 
     // For each HP delta, create a chat message.
     for (const [k, delta] of Object.entries(deltas)) {
+        // If delta is null or 0, return
+        if (!delta) continue;
         const chatMessageMapKey = `${k}-${delta > 0 ? 'plus' : 'minus'}`;
         if (chatMessageMapKey === 'temp-minus') continue;
 
