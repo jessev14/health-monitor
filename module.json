@@ -13,18 +13,6 @@
         "minimum": "11",
         "verified": "11"
     },
-    "relationships": {
-        "systems": [
-            {
-                "id": "dnd5e",
-                "type": "system",
-                "compatibility": {
-                    "minimum": "2.0.0",
-                    "verified": "2.0.0"
-                }
-            }
-        ]
-    },
     "esmodules": [
         "./scripts/main.js"
     ],

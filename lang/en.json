@@ -1,6 +1,10 @@
 {
     "healthMonitor": {
         "settings": {
+            "healthMonitorResource": {
+                "name": "Health Resource to Monitor",
+                "hint": "Resource to monitor (DnD uses 'system.attributes.hp', CoC uses 'system.attribs.hp', Simple World-Building uses 'system.health')"
+            },
             "useTokenName": {
                 "name": "Use Token Name",
                 "hint": "For unlinked tokens, token name will be used. For linked tokens, prototype token name will be used."

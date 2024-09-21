@@ -34,6 +34,14 @@ const lg = x => console.log(x);
 
 Hooks.once('init', () => {
     // Register module settings.
+    game.settings.register(moduleID, "healthMonitorResource", {
+        name: game.i18n.localize("healthMonitor.settings.healthMonitorResource.name"),
+        hint: game.i18n.localize("healthMonitor.settings.healthMonitorResource.hint"),
+        scope: "world",
+        type: String,
+        default: "system.attributes.hp",
+        config: true
+    });
     game.settings.register(moduleID, 'useTokenName', {
         name: game.i18n.localize('healthMonitor.settings.useTokenName.name'),
         hint: game.i18n.localize('healthMonitor.settings.useTokenName.hint'),
@@ -140,12 +148,14 @@ Hooks.once('init', () => {
 
 Hooks.on('preUpdateActor', async (actor, diff, options, userID) => {
     if (!game.settings.get(moduleID, 'hmToggle')) return;
-    
+
+    const healthMonitorResource = game.settings.get(moduleID, 'healthMonitorResource');
+
     // Calcuate HP deltas.
-    const newHP = foundry.utils.getProperty(diff, 'system.attributes.hp');
+    const newHP = foundry.utils.getProperty(diff, healthMonitorResource);
     if (!newHP) return;
 
-    const oldHP = actor.system.attributes.hp;
+    const oldHP = foundry.utils.getProperty(actor, healthMonitorResource);
     const deltas = {};
     if ('value' in newHP) deltas.hp = newHP.value - oldHP.value;
     if ('max' in newHP) deltas.max = newHP.max - oldHP.max
